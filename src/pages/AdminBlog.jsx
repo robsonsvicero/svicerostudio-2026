@@ -150,7 +150,16 @@ const AdminBlog = () => {
 
   const handleEdit = (post) => {
     setEditingId(post.id);
-    setFormData({ ...initialFormState, ...post, autor: post.autor_id });
+    // Garante que data_publicacao esteja no formato yyyy-MM-dd
+    const data_publicacao = post.data_publicacao
+      ? new Date(post.data_publicacao).toISOString().slice(0, 10)
+      : '';
+    setFormData({
+      ...initialFormState,
+      ...post,
+      autor: post.autor_id,
+      data_publicacao,
+    });
     window.scrollTo(0, 0);
   };
   

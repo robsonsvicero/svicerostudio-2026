@@ -18,42 +18,55 @@ const Blog = () => {
   const [authors, setAuthors] = useState([])
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/db/posts/query`, {
+        // Buscar posts
+        const resPosts = await fetch(`${API_URL}/api/db/posts/query`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ orderBy: { data_publicacao: -1 } }),
-        })
-        const payload = await res.json()
-        if (!res.ok) throw new Error(payload.error || 'Erro ao buscar posts')
-        // Corrigir autores: se vier número, substituir por "Equipe Svicero Studio"
-        const postsCorrigidos = (payload.data || []).map(post => ({
+        });
+        const postsPayload = await resPosts.json();
+        if (!resPosts.ok) throw new Error(postsPayload.error || 'Erro ao buscar posts');
+
+        // Buscar autores
+        const resAutores = await fetch(`${API_URL}/api/db/autores/query`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ operation: 'select', filters: [{ column: 'publicado', operator: 'eq', value: true }] }),
+        });
+        const autoresPayload = await resAutores.json();
+        if (!resAutores.ok) throw new Error(autoresPayload.error || 'Erro ao buscar autores');
+        const autoresMap = {};
+        (autoresPayload.data || []).forEach(a => { autoresMap[a._id] = a.nome; });
+
+        // Substituir autor pelo nome correspondente
+        const postsCorrigidos = (postsPayload.data || []).map(post => ({
           ...post,
-          autor: (post.autor && (/^[a-f0-9\-]{32,36}$/i.test(post.autor) || !isNaN(Number(post.autor)))) ? 'Equipe Svicero Studio' : post.autor
+          autor: autoresMap[post.autor] || post.autor
         }));
-        setPosts(postsCorrigidos)
-        const cats = new Set(['Todos'])
-        const tags = new Set()
-        const authorsSet = new Set()
+        setPosts(postsCorrigidos);
+
+        // Categorias, tags e autores para filtros
+        const cats = new Set(['Todos']);
+        const tags = new Set();
+        // Só adicionar nomes válidos de autores (presentes no banco)
+        const nomesAutoresValidos = new Set(Object.values(autoresMap));
         postsCorrigidos.forEach(post => {
-          if (post.categoria) cats.add(post.categoria)
-          if (post.tags) post.tags.split(',').forEach(t => tags.add(t.trim().toLowerCase()))
-          if (post.autor) authorsSet.add(post.autor)
-        })
-        // Filtrar autores que são UUIDs/códigos (32 ou 36 caracteres, com ou sem hífens)
-        const autoresFiltrados = Array.from(authorsSet).filter(a => a && !/^[a-f0-9\-]{32,36}$/i.test(a) && isNaN(Number(a)));
-        setCategories(Array.from(cats))
-        setAllTags(Array.from(tags))
-        setAuthors(autoresFiltrados)
+          if (post.categoria) cats.add(post.categoria);
+          if (post.tags) post.tags.split(',').forEach(t => tags.add(t.trim().toLowerCase()));
+        });
+        setCategories(Array.from(cats));
+        setAllTags(Array.from(tags));
+        setAuthors(Array.from(nomesAutoresValidos));
       } catch {
-        setPosts([])
+        setPosts([]);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    fetchPosts()
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   const filteredPosts = posts
     .filter(post => {
