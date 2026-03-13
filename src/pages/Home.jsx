@@ -285,7 +285,7 @@ const Home = () => {
                 <span className="font-title text-7xl md:text-8xl font-extrabold text-secondary/40 leading-none mb-3">01</span>
                 <h3 className="font-title text-2xl font-bold text-white mb-4">Estratégia de marca</h3>
                 <p className="text-[#B2B8C6] leading-relaxed max-w-xs">
-                  Entendemos seu momento, público e objetivos para definir como você quer ser visto e qual espaço quer ocupar no mercado.
+                  Definimos como você quer ser visto, quem quer atrair e o espaço que quer ocupar no mercado. Isso guia todas as decisões de design e site.
                 </p>
               </div>
 
@@ -294,7 +294,7 @@ const Home = () => {
                 <span className="font-title text-7xl md:text-8xl font-extrabold text-secondary/40 leading-none mb-3">02</span>
                 <h3 className="font-title text-2xl font-bold text-white mb-4">Identidade visual</h3>
                 <p className="text-[#B2B8C6] leading-relaxed max-w-xs">
-                  Criamos uma marca completa (logo, cores, tipografia, elementos) que transmite profissionalismo e confiança.
+                  Criamos uma identidade visual completa que tira a cara de amador e passa o nível de profissionalismo que você já entrega.
                 </p>
               </div>
 
@@ -303,7 +303,7 @@ const Home = () => {
                 <span className="font-title text-7xl md:text-8xl font-extrabold text-secondary/40 leading-none mb-3">03</span>
                 <h3 className="font-title text-2xl font-bold text-white mb-4">Presença digital</h3>
                 <p className="text-[#B2B8C6] leading-relaxed max-w-xs">
-                  Construímos um site estratégico e materiais digitais que facilitam o contato, o agendamento e a comunicação no dia a dia.
+                  Construímos um site e materiais digitais que facilitam o contato e ajudam a transformar visitas em clientes.
                 </p>
               </div>
             </div>
@@ -322,13 +322,21 @@ const Home = () => {
               </ul>
               <hr className="w-full border-t border-[#444] mb-6 mt-2" />
               <div className="text-[#B2B8C6] text-left w-full mb-6">Se você se viu em 2 ou mais pontos, vale a pena conversar com o estúdio.</div>
-              <a
-                href="/formulario-interesse"
-                className="font-medium text-secondary text-lg px-4 py-2 w-fit block hover:text-secondary700"
-                style={{ textDecoration: 'none' }}
-              >Quero falar sobre minha marca
-                <i className="fa-solid fa-arrow-right ml-2"></i>
-              </a>
+              <div className="flex flex-col md:flex-row gap-4">
+                <Button
+                  href="/formulario-interesse"
+                  variant="secondary"
+                >
+                  Quero falar sobre minha marca
+                </Button>
+                <Button
+                  href="/processos"
+                  variant="outline"                  
+                >
+                  Ver como trabalhamos
+                </Button>
+              </div>
+              
 
             </div>
           </div>
@@ -350,10 +358,7 @@ const Home = () => {
           project={selectedProject}
         />
 
-        {/* Principais Serviços / Expertise */}
-        <ServicesSection servicos={servicos} />
-
-        {/* Sobre / About */}
+             {/* Sobre / About */}
         <AboutSection />
 
         {/* Depoimentos */}

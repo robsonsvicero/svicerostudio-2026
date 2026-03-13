@@ -4,6 +4,7 @@ import faqRouter from './routes/faq.js';
 // ...existing code...
 import 'dotenv/config';
 import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
@@ -123,6 +124,7 @@ const postSchema = new mongoose.Schema(
 );
 
 const autorSchema = new mongoose.Schema({
+  _id: { type: String, required: true }, // UUID como chave primária
   nome: { type: String, required: true },
   cargo: { type: String, required: true },
   foto_url: String,
@@ -394,7 +396,17 @@ app.post('/api/db/:table/query', async (req, res) => {
     if (operation === 'insert') {
       const items = Array.isArray(payload) ? payload : [payload];
       const now = new Date();
-      const rows = items.map((item) => ({ ...item, created_at: item.created_at || now, updated_at: now }));
+      let rows;
+      if (table === 'autores') {
+        rows = items.map((item) => ({
+          ...item,
+          _id: item._id || uuidv4(),
+          created_at: item.created_at || now,
+          updated_at: now
+        }));
+      } else {
+        rows = items.map((item) => ({ ...item, created_at: item.created_at || now, updated_at: now }));
+      }
       const inserted = await Model.insertMany(rows);
       // Sempre retorna o(s) documento(s) inserido(s) para garantir que o id chegue ao frontend
       return res.json({ data: normalizeDoc(inserted), error: null });

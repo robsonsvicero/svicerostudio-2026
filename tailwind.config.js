@@ -28,8 +28,7 @@ export default {
         'dark-surface': '#181818',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Manrope', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
         title: ['Manrope', 'sans-serif'],
       },
       fontSize: {

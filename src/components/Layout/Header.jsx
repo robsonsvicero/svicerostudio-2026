@@ -58,7 +58,7 @@ const Header = ({ variant = 'transparent' }) => {
 
   return (
     <header
-      className={`w-full py-5 fixed top-0 left-0 z-50 transition-all duration-300
+      className={`w-full py-2 fixed top-0 left-0 z-50 transition-all duration-300
         ${scrolled ? 'bg-primary/80 backdrop-blur-md shadow-[0_4px_24px_0_rgba(233,191,132,0.12)]' : 'bg-transparent'}`}
     >
       <div className="max-w-screen-xl w-full mx-auto px-4 sm:px-6 lg:px-8">

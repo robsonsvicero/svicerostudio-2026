@@ -27,6 +27,7 @@ const ProjectsSection = ({ projects }) => {
                 CASOS DE SUCESSO
               </span>
               <h2 className="font-title text-4xl md:text-5xl font-extrabold text-white">Projetos em Destaque</h2>
+              <p className="font-sans text-lg md:text-xl text-[#B2B8C6] max-w-2xl leading-relaxed mb-8">Alguns trabalhos que ajudam a contar essa história.</p>
             </div>
 
           </div>

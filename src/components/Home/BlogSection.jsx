@@ -16,7 +16,7 @@ const BlogSection = ({ blogPosts }) => {
                 <span className="w-2 h-2 rounded-full bg-secondary flex-shrink-0 inline-block"></span>
                 BLOG
               </span>
-            <h2 className="font-title text-4xl md:text-5xl font-extrabold text-white mb-4">Insights de Engenharia Visual</h2>
+            <h2 className="font-title text-4xl md:text-5xl font-extrabold text-white mb-4">Conteúdos para fortalecer sua marca</h2>
           </div>
           <div className="mt-4 md:mt-0">
             <a href="/blog" className="text-secondary text-base font-normal flex items-center gap-2 hover:text-white transition-colors">
@@ -46,7 +46,7 @@ const BlogSection = ({ blogPosts }) => {
             <SwiperSlide key={post.id}>
               <Link
                 to={`/blog/${post.slug}`}
-                className="group rounded-2xl overflow-hidden bg-cream transition-all duration-300 hover:-translate-y-2 shadow-lg flex flex-col h-full"
+                className="group rounded-2xl overflow-hidden bg-cream transition-all duration-300 hover:-translate-y-2 shadow-lg flex flex-col h-full min-h-[420px] max-h-[420px]"
               >
                 {/* Imagem do artigo */}
                 {post.imagem_destaque && (
@@ -59,15 +59,15 @@ const BlogSection = ({ blogPosts }) => {
                   </div>
                 )}
                 <div className="flex flex-col px-6 py-6">
-                  {/* Badge categoria */}
-                  {post.categoria && (
-                    <span className="inline-block px-4 py-2 mb-3 text-sm font-semibold text-secondary">
-                      {post.categoria}
-                    </span>
-                  )}
-                  <h3 className="font-title text-l font-normal text-low-light mb-2 leading-snug">
+                  
+                  <h3 className="font-title text-l font-semibold text-secondary mb-2 leading-snug">
                     {post.titulo}
                   </h3>
+                  {post.resumo && (
+                      <p className="text-low-light text-body text-sm mb-5 line-clamp-3 leading-relaxed">
+                        {post.resumo}
+                      </p>
+                    )}
                 </div>
               </Link>
             </SwiperSlide>

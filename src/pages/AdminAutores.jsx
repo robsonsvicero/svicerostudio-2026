@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/useToast';
@@ -99,13 +100,17 @@ const AdminAutores = () => {
         }
         setIsSubmitting(true);
         
-        const payload = { ...formData };
+
+        let payload = { ...formData };
         const op = editingId ? 'update' : 'insert';
         const filters = editingId ? [{ column: 'id', operator: 'eq', value: editingId }] : [];
 
+        // Sempre garantir que _id seja UUID ao criar
+        if (!editingId || !payload._id) {
+            payload._id = uuidv4();
+        }
         if (editingId) {
             delete payload.id;
-            delete payload._id;
         }
 
         try {

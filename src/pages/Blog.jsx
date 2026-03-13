@@ -27,18 +27,25 @@ const Blog = () => {
         })
         const payload = await res.json()
         if (!res.ok) throw new Error(payload.error || 'Erro ao buscar posts')
-        setPosts(payload.data || [])
+        // Corrigir autores: se vier número, substituir por "Equipe Svicero Studio"
+        const postsCorrigidos = (payload.data || []).map(post => ({
+          ...post,
+          autor: (post.autor && (/^[a-f0-9\-]{32,36}$/i.test(post.autor) || !isNaN(Number(post.autor)))) ? 'Equipe Svicero Studio' : post.autor
+        }));
+        setPosts(postsCorrigidos)
         const cats = new Set(['Todos'])
         const tags = new Set()
         const authorsSet = new Set()
-        ;(payload.data || []).forEach(post => {
+        postsCorrigidos.forEach(post => {
           if (post.categoria) cats.add(post.categoria)
           if (post.tags) post.tags.split(',').forEach(t => tags.add(t.trim().toLowerCase()))
           if (post.autor) authorsSet.add(post.autor)
         })
+        // Filtrar autores que são UUIDs/códigos (32 ou 36 caracteres, com ou sem hífens)
+        const autoresFiltrados = Array.from(authorsSet).filter(a => a && !/^[a-f0-9\-]{32,36}$/i.test(a) && isNaN(Number(a)));
         setCategories(Array.from(cats))
         setAllTags(Array.from(tags))
-        setAuthors(Array.from(authorsSet))
+        setAuthors(autoresFiltrados)
       } catch {
         setPosts([])
       } finally {
@@ -78,12 +85,12 @@ const Blog = () => {
         description="Artigos e insights sobre UX Design, Estratégia de Marca e Engenharia de Percepção. O conteúdo exclusivo do Svicero Studio para quem busca o topo do mercado digital."
         keywords="blog design, tendências design, desenvolvimento web, ui ux, design thinking"
       />
-      <div className="bg-dark-bg min-h-screen text-[#EFEFEF] font-sans py-20 lg:py-36">
+      <div className="bg-dark-bg min-h-screen text-[#EFEFEF] font-sans">
         <Header variant="solid" />
 
         {/* Hero */}
         <section className="relative flex items-center justify-center px-0 md:px-0 py-16 lg:py-32 mb-16 overflow-hidden min-h-[420px]" style={{ fontFamily: 'Manrope, Inter, sans-serif' }}>
-          {/* Background com overlay igual ao Hero da Home */}
+         
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
@@ -97,7 +104,7 @@ const Blog = () => {
               Crônicas de Design
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-white/70 leading-relaxed">
-              Insights sobre design, desenvolvimento e criatividade para quem quer construir uma marca sólida.
+              Conteúdos para fortalecer sua marca, inspirar sua jornada e te ajudar a dominar a arte de criar experiências digitais memoráveis.
             </p>
           </div>
         </section>
@@ -265,7 +272,7 @@ const Blog = () => {
                     {/* Categoria e Data */}
                     <div className="flex items-center gap-3 mb-4 text-xs">
                       {post.categoria && (
-                        <span className="inline-flex rounded-full border border-white/10 bg-black/20 px-3 py-1 uppercase tracking-[0.14em] text-white/60">
+                        <span className="inline-flex rounded-full border border-white/10 bg-cream/20 px-3 py-1  text-white text-xs">
                           {post.categoria}
                         </span>
                       )}

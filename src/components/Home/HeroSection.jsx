@@ -1,12 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import heroBkg from '../../images/hero_bkg.png';
 import imageHero from '../../images/image_hero.png';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section
-      className="relative flex items-center justify-center px-0 md:px-0 py-20 lg:py-36 overflow-hidden"
+      className="relative flex items-center justify-center px-0 md:px-0 pt-20 lg:pt-32 pb-20 overflow-hidden"
       style={{ fontFamily: 'Manrope, Inter, sans-serif' }}
     >
       {/* Background com overlay */}
@@ -25,24 +27,29 @@ const HeroSection = () => {
             INOVAÇÃO DIGITAL
           </span>
           <h1 className="font-extrabold text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] mb-6 drop-shadow-xl" style={{ letterSpacing: '-0.02em' }}>
-            Design,<br />
+            Marca e site à altura de quem você é
+            {/* Design,<br />
             Tecnologia e um <br />
-            <span>pouco de <span className="text-secondary font-" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>mágica</span></span>
+            <span>pouco de <span className="text-secondary font-" style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>mágica</span></span> */}
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/85 mb-10 leading-relaxed max-w-lg" style={{ fontWeight: 500 }}>
-            Um estúdio criativo focado em construir experiências digitais memoráveis para marcas modernas que desejam liderar o futuro.
+            Criamos, com você, uma presença digital que combina estratégia, estética e um pouco de magia, para o seu trabalho ser reconhecido antes mesmo do primeiro contato.
           </p>
           <div className="flex flex-col md:flex-row gap-4 mt-2">
             <Button
               variant="secondary"
               className="shadow-lg transition w-full sm:w-full md:w-auto"
-              style={{ boxShadow: '0 4px 24px 0 rgba(249,162,91,0.33)' }}>
-              Conheça nosso trabalho
+              style={{ boxShadow: '0 4px 24px 0 rgba(249,162,91,0.33)' }}
+              onClick={() => navigate('/formulario-interesse')}
+            >
+              Revisar presença digital
             </Button>
             <Button
               variant="outline"
-              className="hover:text-primary transition w-full sm:w-full md:w-auto">
-              Nossos Serviços
+              className="hover:text-primary transition w-full sm:w-full md:w-auto"
+              onClick={() => navigate('/processos')}
+            >
+              Ver como funciona
             </Button>
           </div>
         </div>

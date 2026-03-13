@@ -1,5 +1,6 @@
 import React from 'react';
 import aboutPhoto from '../../images/about-photo.png';
+import Button from '../UI/Button';
 
 const AboutSection = () => {
   return (
@@ -47,7 +48,7 @@ const AboutSection = () => {
               <li className="mb-2">e te dão base para cobrar melhor pelos seus serviços.</li>
             </ul>
             <p className="font-sans text-lg md:text-xl text-[#B2B8C6] max-w-2xl leading-relaxed mb-8">
-              Meu foco é simples: usar o design como ferramenta para você subir de nível no mercado, e não como enfeite.
+              Minha missão com o Svicero Studio é simples: ajudar profissionais de serviços a terem uma marca que permita cobrar melhor e se posicionar com segurança.
             </p>
             {/* Indicadores */}
             <div className="flex gap-8 mt-4">
@@ -62,6 +63,16 @@ const AboutSection = () => {
             </div>
           </div>
         </div>
+        <div
+          className="w-full flex items-center justify-center mt-8 lg:mt-12">
+          <Button
+            href="/formulario-interesse"
+            variant="secondary"
+            className="w-full lg:w-[50%] mt-12 self-start shadow-lg transition">
+            Ver se é para mim
+          </Button>
+        </div>
+
       </div>
     </section>
   );

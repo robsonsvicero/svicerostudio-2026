@@ -65,62 +65,69 @@ const faq = [
 ];
 
 const Processos = () => {
-    const [perguntas, setPerguntas] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
+  const [perguntas, setPerguntas] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-    React.useEffect(() => {
-      setLoading(true);
-      fetch(`${API_URL}/api/faq`)
-        .then(res => res.json())
-        .then(data => {
-          let faqs = Array.isArray(data) ? data : [];
-          faqs = faqs.sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));
-          setPerguntas(faqs);
-          setLoading(false);
-        })
-        .catch(() => {
-          setPerguntas([]);
-          setLoading(false);
-        });
-    }, []);
+  React.useEffect(() => {
+    setLoading(true);
+    fetch(`${API_URL}/api/faq`)
+      .then(res => res.json())
+      .then(data => {
+        let faqs = Array.isArray(data) ? data : [];
+        faqs = faqs.sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));
+        setPerguntas(faqs);
+        setLoading(false);
+      })
+      .catch(() => {
+        setPerguntas([]);
+        setLoading(false);
+      });
+  }, []);
   return (
     <div className="bg-dark-bg min-h-screen flex flex-col text-[#EFEFEF] font-sans">
       <Header variant="solid" />
       <main className="flex-1">
         <SEOHelmet title="Processo Svicero Studio" description="Veja como funciona o processo de criação de marca e site no Svicero Studio." />
         {/* HERO */}
-        <section className="mx-auto max-w-7xl px-6 pt-12 pb-16 lg:px-10 lg:pb-24 mt-20 lg:mt-36 text-center">
+        <section className="mx-auto max-w-7xl px-6 pt-12 lg:px-10 lg:pb-24 mt-20 lg:mt-36 text-center">
           <h1 className="font-title text-5xl font-semibold tracking-[-0.06em] text-white lg:text-7xl mb-4">Como funciona o processo no Svicero Studio</h1>
-          <p className="mt-6 max-w-3xl mx-auto text-base leading-8 text-white/72 lg:text-xl mb-8">
+          <p className="mt-6 max-w-3xl mx-auto text-base leading-8 text-white/72 lg:text-xl ">
             Nada de projeto bagunçado ou sem previsibilidade. Você sabe exatamente o que vai acontecer em cada etapa, do primeiro contato à entrega final.
           </p>
-          <Button href="/contato" className="mx-auto">Quero falar sobre meu projeto</Button>
+
         </section>
 
         {/* POR QUE TER PROCESSO IMPORTA */}
-        <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-20 text-center">
+        <section className=" flex flex-col items-center justify-center rounded-[30px] border border-secondary/25 bg-cream/10 text-xs font-semibold text-secondary mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-20 text-center">
           <h2 className="font-title text-3xl font-semibold tracking-[-0.04em] text-white mb-4">Por que um bom processo é tão importante quanto um bom design</h2>
-          <p className="max-w-2xl mx-auto text-lg mb-6 text-white/80">
-            Um projeto de marca e site não é só “fazer um logo bonito” ou montar uma página na internet.<br />Ele precisa traduzir o que você faz, como você pensa e o tipo de cliente que você quer atrair.<br /><br />Por isso, no Svicero Studio, o processo foi pensado para:<br />entender seu momento com profundidade,<br />transformar isso em estratégia,<br />e só então partir para o visual e o digital.<br /><br />Você não entra em um funil genérico.<br />Você entra em um processo claro, passo a passo, com começo, meio e fim.
+          <p className="max-w-4xl mx-auto text-left font-normal text-lg mb-6 text-white/80">
+            Um projeto de marca e site não é só “fazer um logo bonito” ou montar uma página na internet. Ele precisa traduzir o que você faz, como você pensa e o tipo de cliente que você quer atrair. Por isso, no Svicero Studio, o processo foi pensado para: entender seu momento com profundidade, transformar isso em estratégia, e só então partir para o visual e o digital. Você não entra em um funil genérico, você entra em um processo claro, passo a passo, com começo, meio e fim.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-            {etapas.map((etapa, idx) => (
-              <div key={idx} className="rounded-[30px] border border-[#B87333]/30 bg-[#181818] p-8 shadow-lg flex flex-col h-full text-white">
-                <div className="text-2xl font-semibold text-[#E9BF84] mb-2">{etapa.titulo}</div>
-                <p className="mb-4 text-white/80">{etapa.texto}</p>
-                <div className="flex flex-col md:flex-row md:gap-8">
-                  <div className="flex-1 mb-2 md:mb-0">
-                    <div className="font-bold text-[#E9BF84] mb-1">O que você faz:</div>
-                    <div className="text-white/80">{etapa.papelCliente}</div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-bold text-[#E9BF84] mb-1">O que você recebe:</div>
-                    <div className="text-white/80">{etapa.papelEstudio}</div>
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 mb-16">
+              {etapas.map((etapa, idx) => (
+                <div key={idx} className="rounded-[30px] border border-secondary/30 bg-dark-card/75 p-8 shadow-lg flex flex-col h-full text-white">
+                  <div className="text-2xl font-semibold text-secondary300 mb-2">{etapa.titulo}</div>
+                  <p className="text-lg font-normal mb-4 text-white/80">{etapa.texto}</p>
+                  <div className="flex flex-col md:flex-row md:gap-8">
+                    <div className="flex-1 mb-2 md:mb-0">
+                      <div className="text-base font-bold text-[#E9BF84] mb-1">O que você faz:</div>
+                      <div className="text-base font-normal text-white/80">{etapa.papelCliente}</div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-base font-bold text-[#E9BF84] mb-1">O que você recebe:</div>
+                      <div className="text-base font-normal text-white/80">{etapa.papelEstudio}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <Button 
+            href="/contato" 
+            className="mx-auto"
+            variant='secondary'
+            >Quero falar sobre meu projeto</Button>
         </section>
 
         {/* PAPEL DO CLIENTE */}
@@ -170,8 +177,14 @@ const Processos = () => {
             <h2 className="font-title text-3xl font-semibold tracking-[-0.04em] text-white mb-6">Pronto para dar o próximo passo com a sua marca?</h2>
             <p className="text-white/80 text-base mb-8 max-w-2xl mx-auto">Se você se identificou com esse processo e sente que é o momento de levar sua marca e presença digital a outro nível, o próximo passo é simples.</p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Button href="/contato" className="bg-[#E9BF84] text-[#181818]">Quero falar sobre meu projeto</Button>
-              <Button href="/planos" className="bg-[#B87333] text-white">Ver pacotes e investimentos</Button>
+              <Button 
+              href="/contato" 
+              variant='secondary'
+              >Quero falar sobre meu projeto</Button>
+              <Button 
+              href="/planos" 
+              variant='outline'
+              >Ver pacotes e investimentos</Button>
             </div>
           </div>
         </section>
